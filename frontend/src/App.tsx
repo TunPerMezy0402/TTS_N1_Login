@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-d
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Me from "./pages/Me";
 
 export interface User {
   username: string;
@@ -35,6 +36,10 @@ function App() {
         <Route
           path="/register"
           element={!user ? <Register onRegister={setUser} /> : <Navigate to="/" />}
+        />
+         <Route
+          path="/me"
+          element={user ? <Me token={user.token} /> : <Navigate to="/login" />}
         />
       </Routes>
     </Router>
