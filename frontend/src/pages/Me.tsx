@@ -10,24 +10,32 @@ const Me: React.FC<MeProps> = ({ token }) => {
   const [userInfo, setUserInfo] = useState<any>(null);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await fetch("http://localhost:5000/api/auth/me", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const data = await res.json();
-        console.log("API /me response:", data);
-        if (res.ok) {
-          setUserInfo(data.user || data);
-        } else {
-          console.error(data.message);
-        }
-      } catch (err) {
-        console.error("Fetch error:", err);
+  const fetchUser = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/me", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (res.status === 401) {
+        // ❌ Token cũ không hợp lệ → đăng xuất
+        localStorage.removeItem("user");
+        window.location.href = "/login";
+        return;
       }
-    };
-    fetchUser();
-  }, [token]);
+
+      const data = await res.json();
+      if (res.ok) {
+        setUserInfo(data);
+      } else {
+        console.error(data.message);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  fetchUser();
+}, [token]);
+
 
   if (!userInfo) {
     return (

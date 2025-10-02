@@ -23,7 +23,12 @@ const Home: React.FC<HomeProps> = ({ user, onLogout }) => {
         {user ? (
           <div className="user-card">
             <div className="user-header">
-              <Link to="/me" className="user-avatar-link" aria-label="Xem hồ sơ của tôi" title="Hồ sơ của tôi">
+              <Link
+                to="/me"
+                className="user-avatar-link"
+                aria-label="Xem hồ sơ của tôi"
+                title="Hồ sơ của tôi"
+              >
                 <div className="user-avatar" role="img" aria-hidden="true">
                   {user.username.charAt(0).toUpperCase()}
                 </div>
@@ -48,7 +53,6 @@ const Home: React.FC<HomeProps> = ({ user, onLogout }) => {
             </div>
 
             <div className="auth-buttons">
-              {/* Link styled as button (không đặt <button> trong <Link>) */}
               <Link to="/login" className="btn btn-primary">
                 Đăng nhập
               </Link>
